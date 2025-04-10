@@ -247,20 +247,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &542028942577710090
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8059310070293997659}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a825a08e5f624d94bb5da20323a18a68, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _movementSpeed: 30
-  _rotationSpeed: 360
 --- !u!114 &1286388414983658443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -292,18 +278,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1854660943519341652
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2554786405186986924}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34acd3f3e3de4329a6e533650419b318, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!33 &1921385192747414060
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -337,8 +311,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3116177897445312366}
   - component: {fileID: 6748173297669066794}
-  - component: {fileID: 4590255656723014932}
-  - component: {fileID: 1854660943519341652}
   m_Layer: 0
   m_Name: Controller Hand
   m_TagString: Untagged
@@ -384,7 +356,7 @@ Transform:
   m_GameObject: {fileID: 5346784963257931259}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2, y: 1, z: 2}
+  m_LocalPosition: {x: 2, y: 2, z: 2}
   m_LocalScale: {x: 0.6, y: 0.6, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -400,7 +372,7 @@ Transform:
   m_GameObject: {fileID: 2554786405186986924}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 2}
+  m_LocalPosition: {x: 2, y: 1, z: 2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -501,7 +473,7 @@ Transform:
   m_GameObject: {fileID: 7125639428986165884}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2, y: 1, z: 2}
+  m_LocalPosition: {x: 2, y: 2, z: 2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -509,20 +481,6 @@ Transform:
   - {fileID: 8762990761337505826}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4590255656723014932
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2554786405186986924}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3dc5f05a9374e4f4294bc5299cb597a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _movementSpeed: 10
-  _rotationSpeed: 200
 --- !u!4 &4700281597702582038
 Transform:
   m_ObjectHideFlags: 0
@@ -619,21 +577,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &5145284051454772580
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5346784963257931259}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd8d3514fe0faba4ab8c75d85cce6836, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _attachOnStart: 1
-  _attachTo: {fileID: 7125639428986165884}
-  _jointPrefabIds: 02000000
 --- !u!23 &5172364165863790086
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -734,7 +677,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2850102892545910936}
   - component: {fileID: 5940290227396844236}
-  - component: {fileID: 5145284051454772580}
   - component: {fileID: 4331893976658749949}
   m_Layer: 0
   m_Name: Item
@@ -742,7 +684,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5675824596518622896
 Transform:
   m_ObjectHideFlags: 0
@@ -847,7 +789,7 @@ Rigidbody:
   m_ImplicitTensor: 0
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
 --- !u!23 &6448293559979648585
@@ -1078,7 +1020,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4700281597702582038}
   - component: {fileID: 1286388414983658443}
-  - component: {fileID: 542028942577710090}
   - component: {fileID: 2001908161}
   m_Layer: 0
   m_Name: Player

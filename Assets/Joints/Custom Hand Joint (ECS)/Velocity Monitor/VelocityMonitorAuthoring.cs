@@ -11,7 +11,8 @@ public class VelocityMonitorAuthoring : MonoBehaviour
             var entity = GetEntity(TransformUsageFlags.Dynamic);
             AddComponent<VelocityMonitorComponent>(entity, new()
             {
-                LastWorldSpaceRotation = quaternion.identity // so we dont get NaN on first run
+                LastLocalPosition = float3.zero,
+                LastLocalRotation = quaternion.identity
             });
         }
     }

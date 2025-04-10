@@ -2,7 +2,8 @@ using Unity.Burst;
 using Unity.Entities;
 using Unity.Transforms;
 
-[UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
+[UpdateInGroup(typeof(FixedStepSimulationSystemGroup), OrderFirst = true)]
+[UpdateAfter(typeof(FollowCCSystem))]
 partial struct VelocityMonitorSystem : ISystem
 {
     [BurstCompile]
@@ -16,30 +17,16 @@ partial struct VelocityMonitorSystem : ISystem
     public void OnUpdate(ref SystemState state)
     {
         float deltaTime = SystemAPI.Time.fixedDeltaTime;
-        foreach (var (velocityMonitorComponent, localToWorld)
-                 in SystemAPI.Query<RefRW<VelocityMonitorComponent>, RefRO<LocalToWorld>>().WithAll<Parent>())
-        {
-            velocityMonitorComponent.ValueRW.CurrentLinearVelocity =
-                CustomHandJointMath.GetLinearVelocity(localToWorld.ValueRO.Position, velocityMonitorComponent.ValueRO.LastWorldSpacePosition, deltaTime);
-            velocityMonitorComponent.ValueRW.CurrentAngularVelocity =
-                CustomHandJointMath.GetAngularVelocityEuler(localToWorld.ValueRO.Rotation, velocityMonitorComponent.ValueRO.LastWorldSpaceRotation, deltaTime);
-
-            velocityMonitorComponent.ValueRW.LastWorldSpacePosition = localToWorld.ValueRO.Position;
-            velocityMonitorComponent.ValueRW.LastWorldSpaceRotation = localToWorld.ValueRO.Rotation;
-        }
-
         foreach (var (velocityMonitorComponent, localTransform)
-                 in SystemAPI.Query<RefRW<VelocityMonitorComponent>, RefRO<LocalTransform>>().WithNone<Parent>())
+                 in SystemAPI.Query<RefRW<VelocityMonitorComponent>, RefRO<LocalToWorld>>())
         {
             velocityMonitorComponent.ValueRW.CurrentLinearVelocity =
-                CustomHandJointMath.GetLinearVelocity(localTransform.ValueRO.Position, velocityMonitorComponent.ValueRO.LastWorldSpacePosition, deltaTime);
+                CustomHandJointMath.GetLinearVelocity(localTransform.ValueRO.Position, velocityMonitorComponent.ValueRO.LastLocalPosition, deltaTime);
             velocityMonitorComponent.ValueRW.CurrentAngularVelocity =
-                CustomHandJointMath.GetAngularVelocityEuler(localTransform.ValueRO.Rotation, velocityMonitorComponent.ValueRO.LastWorldSpaceRotation, deltaTime);
+                CustomHandJointMath.GetAngularVelocityEuler(localTransform.ValueRO.Rotation, velocityMonitorComponent.ValueRO.LastLocalRotation, deltaTime);
 
-            velocityMonitorComponent.ValueRW.LastWorldSpacePosition = localTransform.ValueRO.Position;
-            velocityMonitorComponent.ValueRW.LastWorldSpaceRotation = localTransform.ValueRO.Rotation;
-            UnityEngine.Debug.Log($"VelocityMonitorSystem: {localTransform.ValueRO.Position}");
-
+            velocityMonitorComponent.ValueRW.LastLocalPosition = localTransform.ValueRO.Position;
+            velocityMonitorComponent.ValueRW.LastLocalRotation = localTransform.ValueRO.Rotation;
         }
     }
 }
