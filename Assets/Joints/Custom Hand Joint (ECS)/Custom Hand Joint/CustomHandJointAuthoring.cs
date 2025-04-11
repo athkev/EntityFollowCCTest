@@ -27,14 +27,10 @@ public class CustomHandJointAuthoring : MonoBehaviour
             {
                 PlayerEntity = playerMovementEntity,
                 ControllerHandEntity = controllerHandEntity,
-
-                LinearSpringStrength = authoring._linearSpringStrength,
-                LinearDamping = authoring._linearDamping,
-                LinearMaxForce = authoring._linearMaxForce,
-
-                AngularSpringStrength = authoring._angularSpringStrength,
-                AngularDamping = authoring._angularDamping,
-                AngularMaxForce = authoring._angularMaxForce,
+                SlowdownDistance = 5f,
+                minSpeed = 0.1f,
+                maxSpeed = 10f,
+                acceleratorFactor = 1f
             });
         }
     }

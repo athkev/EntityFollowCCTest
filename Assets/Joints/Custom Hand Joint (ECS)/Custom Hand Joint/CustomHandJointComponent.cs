@@ -1,15 +1,14 @@
 using Unity.Entities;
+using Unity.Mathematics;
 
 public struct CustomHandJointComponent : IComponentData
 {
     public Entity PlayerEntity;
     public Entity ControllerHandEntity;
 
-    public float LinearSpringStrength;
-    public float LinearDamping;
-    public float LinearMaxForce;
+    public  float SlowdownDistance;
+    public float minSpeed;
+    public float maxSpeed;
+    public float acceleratorFactor;
 
-    public float AngularSpringStrength; // In Degrees for easier editing, converted by system
-    public float AngularDamping;
-    public float AngularMaxForce;
 }
