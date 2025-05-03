@@ -3,6 +3,7 @@ using UnityEngine;
 public class SimpleCCMove : MonoBehaviour
 {
     [SerializeField] public Transform _controller;
+    [SerializeField] public bool _grabbutton;
     [SerializeField] public int _fps = 60;
     [Header("Movement")]
     public float moveSpeed = 5f;

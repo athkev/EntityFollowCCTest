@@ -2767,6 +2767,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _controller: {fileID: 1129683600}
+  _grabbutton: 0
   _fps: 60
   moveSpeed: 5
   jumpHeight: 2

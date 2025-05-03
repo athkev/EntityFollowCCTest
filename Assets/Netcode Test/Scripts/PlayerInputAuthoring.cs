@@ -8,6 +8,7 @@ public struct PlayerInput : IInputComponentData
 {
     public float3 CharacterPosition;
     public float3 ControllerPosition;
+    public bool GrabButton;
 }
 
 [DisallowMultipleComponent]
@@ -24,7 +25,7 @@ public class PlayerInputAuthoring : MonoBehaviour
 }
 
 [WorldSystemFilter(WorldSystemFilterFlags.Default | WorldSystemFilterFlags.ClientSimulation)]
-[UpdateInGroup(typeof(PredictedSimulationSystemGroup))]
+[UpdateInGroup(typeof(GhostInputSystemGroup))]
 public partial struct SamplePlayerInput : ISystem
 {
     public void OnCreate(ref SystemState state)
@@ -41,6 +42,7 @@ public partial struct SamplePlayerInput : ISystem
         {
             playerInput.ValueRW.CharacterPosition = ccMove.transform.position;
             playerInput.ValueRW.ControllerPosition = ccMove._controller.transform.position;
+            playerInput.ValueRW.GrabButton = ccMove._grabbutton;
         }
     }
 }

@@ -82,6 +82,8 @@ public partial struct GoInGameServerSystem : ISystem
     {
         // Get the prefab to instantiate
         var prefab = SystemAPI.GetSingleton<PlayerSpawner>().Player;
+        var handPrefab = SystemAPI.GetSingleton<PlayerSpawner>().PhysicsHand;
+        var itemPrefab = SystemAPI.GetSingleton<ItemSpawnerComponent>().Item;
 
         // Ge the name of the prefab being instantiated
         state.EntityManager.GetName(prefab, out var prefabName);
@@ -104,10 +106,47 @@ public partial struct GoInGameServerSystem : ISystem
             // Associate the instantiated prefab with the connected client's assigned NetworkId
             commandBuffer.SetComponent(player, new GhostOwner { NetworkId = networkId.Value});
 
+            var hand = commandBuffer.Instantiate(handPrefab);
+            commandBuffer.SetComponent(hand, new GhostOwner { NetworkId = networkId.Value});
+
+            var vrComponent = state.EntityManager.GetComponentData<Player>(prefab);
+            vrComponent.Controller = hand;
+            vrComponent.Character = player;
+            commandBuffer.SetComponent(player, vrComponent);
+
+            commandBuffer.SetComponent(player, new GrabberComponent { RigidbodyEntity = hand});
+            
+
+            var item = commandBuffer.Instantiate(itemPrefab);
+            commandBuffer.AddComponent<ItemComponent>(item);
+            commandBuffer.SetComponent(item, new GhostOwner { NetworkId = networkId.Value});
+
+
             // Add the player to the linked entity group so it is destroyed automatically on disconnect
             commandBuffer.AppendToBuffer(reqSrc.ValueRO.SourceConnection, new LinkedEntityGroup{Value = player});
             commandBuffer.DestroyEntity(reqEntity);
         }
         commandBuffer.Playback(state.EntityManager);
+    }
+}
+
+
+[WorldSystemFilter(WorldSystemFilterFlags.ClientSimulation | WorldSystemFilterFlags.ThinClientSimulation)]
+public partial struct ClientPlayerSetupAfterSpawn : ISystem
+{
+    [BurstCompile]
+    public void OnUpdate(ref SystemState state)
+    {
+
+        foreach (var (player, grabber) in SystemAPI.Query<RefRW<Player>, RefRW<GrabberComponent>>())
+        {
+            if (player.ValueRO.Controller != Entity.Null && grabber.ValueRO.RigidbodyEntity != Entity.Null) continue;
+            
+            foreach ( var (_, physicsHandEntity) in SystemAPI.Query<RefRO<PhysicsHandTag>>().WithEntityAccess())
+            {
+                player.ValueRW.Controller = physicsHandEntity;
+                grabber.ValueRW.RigidbodyEntity = physicsHandEntity;
+            }
+        }
     }
 }
