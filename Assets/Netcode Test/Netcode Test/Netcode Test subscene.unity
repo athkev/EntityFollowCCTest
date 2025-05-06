@@ -475,9 +475,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bd6bf266b32e49ac8c5951317b6b250, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnableLagCompensation: 0
-  ServerHistorySize: 0
-  ClientHistorySize: 0
+  EnableLagCompensation: 1
+  ServerHistorySize: 10
+  ClientHistorySize: 10
   ClientNonGhostWorldIndex: 1
   DeepCopyDynamicColliders: 1
   DeepCopyStaticColliders: 0

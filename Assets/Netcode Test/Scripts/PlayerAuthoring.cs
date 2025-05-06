@@ -6,6 +6,7 @@ public struct Player : IComponentData
 {
     public Entity Character;
     public Entity Controller;
+    public Entity ControllerBodyPair;
 }
 
 [DisallowMultipleComponent]

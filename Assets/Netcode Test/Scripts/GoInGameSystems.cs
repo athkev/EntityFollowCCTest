@@ -118,8 +118,7 @@ public partial struct GoInGameServerSystem : ISystem
             
 
             var item = commandBuffer.Instantiate(itemPrefab);
-            commandBuffer.AddComponent<ItemComponent>(item);
-            commandBuffer.SetComponent(item, new GhostOwner { NetworkId = networkId.Value});
+            commandBuffer.SetComponent(item, new GhostOwner { NetworkId = networkId.Value}); //remove
 
 
             // Add the player to the linked entity group so it is destroyed automatically on disconnect

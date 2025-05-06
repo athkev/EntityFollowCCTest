@@ -2,6 +2,9 @@ using Unity.Entities;
 using UnityEngine;
 using Unity.NetCode;
 using Unity.Burst;
+using Unity.Transforms;
+using Unity.Physics;
+
 public struct GrabberComponent : IComponentData
 {
     public Entity RigidbodyEntity; // assign after ghost physics hand is spawned
@@ -33,6 +36,7 @@ public partial struct PlayerInputGrabSystem : ISystem
     }
     public void OnUpdate(ref SystemState state)
     {
+        var ecb = new EntityCommandBuffer(Unity.Collections.Allocator.Temp);
         foreach (var (input, grabberComponent, ghostOwner) in SystemAPI.Query<RefRO<PlayerInput>, RefRW<GrabberComponent>, RefRO<GhostOwner>>().WithAll<Simulate>())
         {
             if (!input.ValueRO.GrabButton) continue;
@@ -41,16 +45,31 @@ public partial struct PlayerInputGrabSystem : ISystem
 
             // grab item
 
-            foreach (var (_, attachJoint, dynamicJoint, itemGhostOwner) in SystemAPI.Query<RefRO<ItemComponent>, RefRW<AttachJointComponent>, RefRO<DynamicJointComponent>, RefRW<GhostOwner>>())
-            {
-                UnityEngine.Debug.Log("grabed");
-                //grab logic here
-                attachJoint.ValueRW.Attach = true;
-                attachJoint.ValueRW.AttachToEntity = grabberComponent.ValueRO.RigidbodyEntity;
+            // foreach (var (_, attachJoint, dynamicJoint, itemGhostOwner) in SystemAPI.Query<RefRO<ItemComponent>, RefRW<AttachJointComponent>, RefRO<DynamicJointComponent>, RefRW<GhostOwner>>())
+            // {
+            //     UnityEngine.Debug.Log("grabed");
+            //     //grab logic here
+            //     attachJoint.ValueRW.Attach = true;
+            //     attachJoint.ValueRW.AttachToEntity = grabberComponent.ValueRO.RigidbodyEntity;
 
-                // set ghost owner to the grabber
-                itemGhostOwner.ValueRW.NetworkId = ghostOwner.ValueRO.NetworkId;
+            //     // set ghost owner to the grabber
+            //     itemGhostOwner.ValueRW.NetworkId = ghostOwner.ValueRO.NetworkId;
+            // }
+
+            foreach (var (item, childBuffer, entity) in SystemAPI.Query<RefRO<ItemComponent>, DynamicBuffer<Child>>().WithEntityAccess())
+            {
+                foreach (var child in childBuffer)
+                {
+                    if (!state.EntityManager.HasComponent<PhysicsConstrainedBodyPair>(child.Value)) continue;
+                    if (!state.EntityManager.HasComponent<PhysicsJoint>(child.Value)) continue;
+                    
+                    // Connect player body to the hand bodypair
+                    var bodyPair = new PhysicsConstrainedBodyPair(entity, grabberComponent.ValueRO.RigidbodyEntity, false);
+                    ecb.SetComponent(child.Value, bodyPair);
+                }
             }
         }
+        ecb.Playback(state.EntityManager);
+        ecb.Dispose();
     }
 }

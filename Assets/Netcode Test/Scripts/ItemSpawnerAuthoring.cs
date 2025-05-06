@@ -5,10 +5,7 @@ public struct ItemSpawnerComponent : IComponentData
 {
     public Entity Item;
 }
-public struct ItemComponent : IComponentData
-{
-    
-}
+
 
 [DisallowMultipleComponent]
 public class ItemSpawnerAuthoring : MonoBehaviour

@@ -4,10 +4,12 @@ using Unity.NetCode;
 using UnityEngine;
 using Unity.Mathematics;
 
+[GhostComponent(PrefabType = GhostPrefabType.All)]
 public struct PlayerInput : IInputComponentData
 {
     public float3 CharacterPosition;
     public float3 ControllerPosition;
+    public quaternion ControllerRotation;
     public bool GrabButton;
 }
 
@@ -41,7 +43,9 @@ public partial struct SamplePlayerInput : ISystem
         foreach (var playerInput in SystemAPI.Query<RefRW<PlayerInput>>().WithAll<GhostOwnerIsLocal>())
         {
             playerInput.ValueRW.CharacterPosition = ccMove.transform.position;
-            playerInput.ValueRW.ControllerPosition = ccMove._controller.transform.position;
+            playerInput.ValueRW.ControllerPosition = ccMove._controller.transform.localPosition;
+            playerInput.ValueRW.ControllerRotation = ccMove._controller.transform.localRotation;
+
             playerInput.ValueRW.GrabButton = ccMove._grabbutton;
         }
     }
