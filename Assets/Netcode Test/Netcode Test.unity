@@ -2012,7 +2012,7 @@ GameObject:
   - component: {fileID: 1129683602}
   - component: {fileID: 1129683601}
   m_Layer: 0
-  m_Name: Controller
+  m_Name: XR Controller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2585,7 +2585,7 @@ GameObject:
   - component: {fileID: 1575765192}
   - component: {fileID: 1575765191}
   m_Layer: 0
-  m_Name: Main Camera
+  m_Name: Head Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2723,7 +2723,7 @@ GameObject:
   - component: {fileID: 1593152323}
   - component: {fileID: 1593152322}
   m_Layer: 0
-  m_Name: Capsule
+  m_Name: XR Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3262,5 +3262,5 @@ SceneRoots:
   - {fileID: 1418441352}
   - {fileID: 884143283}
   - {fileID: 232843378}
-  - {fileID: 1593152326}
   - {fileID: 520116163}
+  - {fileID: 1593152326}
